@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Panel Admin – Sabilul Muttaqin</title><link rel="icon" href="assets/favicon.png"><link rel="stylesheet" href="css/style.css"></head>
 <body><div id="notif" class="notif"></div><div class="adm">
-<div id="login" class="card"><h2>Masuk Admin</h2><form id="fl"><label>Username<input name="u" required autocomplete="username"></label><label>Password<input name="p" type="password" required autocomplete="current-password"></label><button class="btn amber">Masuk</button></form></div>
+<div id="login" class="card"><h2>Masuk Admin</h2><form id="fl"><label>Username<input name="u" required autocomplete="username"></label><label>Password<span class="pw"><input name="p" id="pw" type="password" required autocomplete="current-password"><button type="button" id="eye" aria-label="Lihat password">👁</button></span></label><button class="btn amber">Masuk</button></form></div>
 <div id="panel" hidden><div style="display:flex;justify-content:space-between;align-items:center"><h2>Panel Admin</h2><span><b id="who"></b> <button class="btn ghost sm" id="out">Keluar</button></span></div>
 <div class="tabs"><button data-t="pendaftar" class="on">Pendaftar</button><button data-t="berita">Berita</button><button data-t="galeri">Galeri</button><button data-t="biaya">Biaya</button><button data-t="pengaturan">Pengaturan</button></div>
 <div id="t-pendaftar" class="x"></div>

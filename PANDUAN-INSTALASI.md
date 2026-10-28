@@ -45,3 +45,8 @@ Tambahkan baris di sheet `Pengaturan`: `PENGUMUMAN`, `SAMBUTAN`, `PIMPINAN`, `FO
 
 ## G. Panel admin: Galeri, Biaya, Pengaturan
 Tab baru di admin.html. **Galeri** dan **Biaya** bisa ditambah/diubah/dihapus; **Pengaturan** (kontak, sambutan, link portal, dll) diubah langsung per baris. Editor hanya melihat Berita dan Galeri. Foto galeri berupa **link gambar** (unggah file belum tersedia). Setelah mengganti Kode.gs: Deploy → Manage deployments → Edit → New version.
+
+## H. Tidak bisa login admin?
+1. Pastikan Kode.gs terbaru sudah di-deploy (**Manage deployments → Edit → New version**).
+2. Di editor Apps Script, ubah sandi di fungsi `aturAkunAdmin`, pilih fungsi itu, klik **Run**. Ini otomatis membuat sheet `Admin` bila belum ada, dan mereset sandi bila username `admin` sudah ada. Setelah berhasil, kembalikan sandinya ke tulisan semula.
+3. Login dengan username `admin` dan sandi tadi. Ikon mata di kolom password menampilkan atau menyembunyikan sandi.
