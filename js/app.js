@@ -5,7 +5,7 @@ function notif(m, t = 'success') { const n = $('#notif'); n.textContent = m; n.c
 function applyP() {
   $$('[data-p]').forEach(e => { if (P[e.dataset.p]) e.textContent = P[e.dataset.p]; });
   $$('[data-wa]').forEach(a => a.href = 'https://wa.me/' + String(P.WA_ADMIN).replace(/\D/g, '') + '?text=' + encodeURIComponent(a.dataset.wa));
-  $('#portal').href = P.PORTAL_URL || '#'; $('#peta').src = P.MAPS_EMBED;
+  $('#portal').href = $('#portal2').href = P.PORTAL_URL || '#'; if (P.FOTO_KAMPUS) $('#campus').style.backgroundImage = `url(${P.FOTO_KAMPUS})`; $('#peta').src = P.MAPS_EMBED;
   $('#soc').innerHTML = [['Instagram','INSTAGRAM'],['YouTube','YOUTUBE'],['Facebook','FACEBOOK'],['TikTok','TIKTOK']].filter(x => P[x[1]]).map(x => `<a href="${esc(P[x[1]])}" target="_blank" rel="noopener">${x[0]}</a>`).join('');
 }
 function renderBerita(l) {
@@ -19,10 +19,19 @@ function reveal() {
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .12});
   $$('.rv:not(.in)').forEach((e, i) => { e.style.transitionDelay = (i % 4) * 80 + 'ms'; io.observe(e); });
 }
+let BIAYA = [], BJ = 'SD';
+const rp = n => 'Rp ' + Number(n || 0).toLocaleString('id-ID');
+function renderBiaya() {
+  const box = $('#biaya-box'), l = BIAYA.filter(b => (b.jenjang === BJ || b.jenjang === 'Semua') && b.tampil !== 'TIDAK');
+  if (P.BIAYA_TERBUKA === 'TIDAK' || !l.length) { box.innerHTML = '<p class="muted">Hubungi panitia untuk rincian biaya.</p>'; return; }
+  const sekali = l.filter(b => b.periode === 'Sekali').reduce((s, b) => s + Number(b.nominal || 0), 0), bln = l.find(b => b.periode === 'Bulanan');
+  box.innerHTML = '<table><tr><th>Komponen</th><th>Periode</th><th>Nominal</th></tr>' + l.map(b => `<tr><td>${esc(b.komponen)}</td><td>${esc(b.periode)}</td><td>${rp(b.nominal)}</td></tr>`).join('') + `<tr class="tot"><td colspan="2">Estimasi masuk (sekali bayar${bln ? ' + 1 bulan pertama' : ''})</td><td>${rp(sekali + (bln ? Number(bln.nominal) : 0))}</td></tr></table>`;
+}
+$$('#bj button').forEach(b => b.onclick = () => { BJ = b.dataset.j; $$('#bj button').forEach(x => x.classList.toggle('on', x === b)); renderBiaya(); });
 async function load() {
-  try { const r = await (await fetch(GAS_URL + '?action=getData')).json(); if (!r.success) throw 0; Object.assign(P, r.data.pengaturan); applyP(); renderBerita(r.data.berita || []); renderGaleri(r.data.galeri || []); }
+  try { const r = await (await fetch(GAS_URL + '?action=getData')).json(); if (!r.success) throw 0; Object.assign(P, r.data.pengaturan); applyP(); renderBerita(r.data.berita || []); renderGaleri(r.data.galeri || []); BIAYA = r.data.biaya || []; }
   catch (e) { applyP(); renderBerita([]); renderGaleri([]); }
-  reveal();
+  renderBiaya(); reveal();
 }
 $('#form').addEventListener('submit', async e => {
   e.preventDefault(); const b = e.submitter; b.disabled = true; b.textContent = 'Mengirim...';

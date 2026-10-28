@@ -33,3 +33,15 @@ git push -u origin main
 
 ## D. Tes
 Buka situs → data berita tampil → isi formulir → cek sheet `Pendaftar` dan email admin.
+
+## E. Panel Admin (admin.html)
+- Buka `https://USERNAME.github.io/NAMA-REPO/admin.html`. Untuk instalasi baru, login pertama (username `admin`) dan passwordnya muncul di Execution Log setelah `setupAppEnvironment`.
+- **Sudah terlanjur menjalankan setup versi lama?** Jangan jalankan setup lagi. Tambahkan manual di spreadsheet: sheet baru `Admin` (kolom `username`, `hash`, `role`), lalu di editor Apps Script jalankan `buatAdmin('admin','PASSWORD-ANDA','admin')` lewat fungsi pembungkus. Tambahkan juga baris `SEJARAH`, `VISI`, `MISI`, `INFO_BIAYA` di sheet `Pengaturan`.
+- Peran: **admin** (pendaftar + berita), **editor** (berita saja). Tambah akun dengan `buatAdmin('nama','sandi','editor')`.
+- Setelah mengganti Kode.gs: Deploy → Manage deployments → Edit → **New version**.
+
+## F. Tambahan tampilan (update)
+Tambahkan baris di sheet `Pengaturan`: `PENGUMUMAN`, `SAMBUTAN`, `PIMPINAN`, `FOTO_KAMPUS`, `BIAYA_TERBUKA` (YA/TIDAK). Buat sheet `Biaya` dengan kolom `komponen, jenjang (SD/SMP/Semua), periode (Sekali/Bulanan), nominal, tampil`. Tanpa sheet ini bagian biaya otomatis menampilkan "hubungi panitia". Lalu deploy versi baru Kode.gs.
+
+## G. Panel admin: Galeri, Biaya, Pengaturan
+Tab baru di admin.html. **Galeri** dan **Biaya** bisa ditambah/diubah/dihapus; **Pengaturan** (kontak, sambutan, link portal, dll) diubah langsung per baris. Editor hanya melihat Berita dan Galeri. Foto galeri berupa **link gambar** (unggah file belum tersedia). Setelah mengganti Kode.gs: Deploy → Manage deployments → Edit → New version.
