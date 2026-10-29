@@ -56,3 +56,4 @@
 .sl{position:absolute;inset:0;background:center/cover;opacity:0;transition:opacity 1.2s}.sl.on{opacity:1}.hbg .sl.on{animation:kb 9s ease-out forwards}@keyframes kb{from{transform:scale(1)}to{transform:scale(1.1)}}.cl{position:absolute;inset:0;border-radius:inherit;overflow:hidden}
 @media(max-width:900px){.hov{background:linear-gradient(180deg,rgba(8,22,48,.9),rgba(15,43,92,.82) 60%,rgba(30,58,138,.6))}}
 @media(prefers-reduced-motion:reduce){.hbg .sl.on{animation:none}}
+.tc{padding:1rem}.av{width:100%;height:auto;aspect-ratio:4/5;border-radius:1rem;object-fit:cover;object-position:center top;margin:0 0 .9rem}.ini{font-size:56px}.tc h3{margin:.2rem 0}
