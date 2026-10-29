@@ -43,3 +43,4 @@
 .dd-m{position:absolute;top:calc(100% - 2px);left:0;min-width:250px;background:#fff;border-radius:1rem;box-shadow:0 20px 40px -12px rgba(15,43,92,.35);padding:.5rem;display:none;flex-direction:column;z-index:60}.dd:hover .dd-m,.dd.open .dd-m{display:flex}.dd-m a{color:#0F172A!important;padding:.6rem .9rem;border-radius:.7rem;font-size:14px}.dd-m a:hover{background:#FFEDD5;color:#EA580C!important}
 .tc{text-align:center}.av{width:96px;height:96px;border-radius:50%;object-fit:cover;margin:0 auto .6rem;display:block}.ini{display:grid;place-items:center;font-size:36px;font-weight:800;color:#fff;background:linear-gradient(135deg,#0F2B5C,#38BDF8)}
 @media(max-width:900px){.dd-m{position:static;box-shadow:none;background:rgba(255,255,255,.06);margin:.3rem 0}.dd-m a{color:#dbeafe!important}.dd:hover .dd-m{display:none}.dd.open .dd-m{display:flex}}
+.glasscard b{color:#fff}.glasscard small{color:#93c5fd}
