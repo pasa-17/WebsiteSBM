@@ -11,10 +11,21 @@ function applyP() {
 function renderBerita(l) {
   $('#berita-list').innerHTML = l.length ? l.slice(0, 6).map(b => `<article class="card news rv">${b.gambar ? `<img loading="lazy" src="${esc(b.gambar)}" alt="">` : '<div class="ph"></div>'}<small>${esc(b.kategori || 'Berita')} · ${esc(String(b.tanggal || '').slice(0, 10))}</small><h3>${esc(b.judul)}</h3><p class="muted">${esc(b.ringkasan)}</p></article>`).join('') : '<p class="muted">Belum ada berita.</p>';
 }
+let GL = [], LI = 0, gt;
 function renderGaleri(l) {
-  $('#galeri-list').innerHTML = l.length ? l.map(g => g.url ? `<img loading="lazy" src="${esc(g.url)}" alt="${esc(g.judul)}">` : '').join('') : '<div class="ph"></div><div class="ph"></div><div class="ph"></div>';
-  const s = $('#galeri-list'); if (l.length > 1) setInterval(() => { s.scrollLeft + s.clientWidth >= s.scrollWidth - 5 ? s.scrollTo({left: 0, behavior: 'smooth'}) : s.scrollBy({left: 340, behavior: 'smooth'}); }, 4000);
+  GL = l.filter(g => g.url); const s = $('#galeri-list');
+  s.innerHTML = GL.length ? GL.map((g, i) => `<img loading="lazy" data-i="${i}" src="${esc(g.url)}" alt="${esc(g.judul)}">`).join('') : '<div class="ph"></div><div class="ph"></div><div class="ph"></div>';
+  const move = d => { if (d > 0 && s.scrollLeft + s.clientWidth >= s.scrollWidth - 5) s.scrollTo({left: 0, behavior: 'smooth'}); else if (d < 0 && s.scrollLeft <= 5) s.scrollTo({left: s.scrollWidth, behavior: 'smooth'}); else s.scrollBy({left: d * Math.min(360, s.clientWidth * .8), behavior: 'smooth'}); };
+  $('#gprev').onclick = () => move(-1); $('#gnext').onclick = () => move(1);
+  const auto = () => { clearInterval(gt); if (GL.length > 1) gt = setInterval(() => move(1), 3500); };
+  auto(); ['mouseenter', 'touchstart'].forEach(v => s.addEventListener(v, () => clearInterval(gt), {passive: true})); ['mouseleave', 'touchend'].forEach(v => s.addEventListener(v, auto, {passive: true}));
+  s.onclick = e => { const im = e.target.closest('img'); if (im) openLb(+im.dataset.i); };
 }
+function openLb(i) { if (!GL.length) return; LI = (i + GL.length) % GL.length; $('#lbi').src = GL[LI].url; $('#lbc').textContent = GL[LI].judul || ''; $('#lb').hidden = false; document.body.style.overflow = 'hidden'; }
+function closeLb() { $('#lb').hidden = true; document.body.style.overflow = ''; }
+$('#lbx').onclick = closeLb; $('#lbp').onclick = () => openLb(LI - 1); $('#lbn').onclick = () => openLb(LI + 1); $('#lb').onclick = e => { if (e.target.id === 'lb') closeLb(); };
+addEventListener('keydown', e => { if ($('#lb').hidden) return; if (e.key === 'Escape') closeLb(); if (e.key === 'ArrowLeft') openLb(LI - 1); if (e.key === 'ArrowRight') openLb(LI + 1); });
+let x0 = 0; $('#lbi').addEventListener('touchstart', e => x0 = e.touches[0].clientX, {passive: true}); $('#lbi').addEventListener('touchend', e => { const d = e.changedTouches[0].clientX - x0; if (Math.abs(d) > 50) openLb(LI + (d < 0 ? 1 : -1)); });
 function reveal() {
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .12});
   $$('.rv:not(.in)').forEach((e, i) => { e.style.transitionDelay = (i % 4) * 80 + 'ms'; io.observe(e); });
