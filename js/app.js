@@ -19,7 +19,14 @@ function reveal() {
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .12});
   $$('.rv:not(.in)').forEach((e, i) => { e.style.transitionDelay = (i % 4) * 80 + 'ms'; io.observe(e); });
 }
-let BIAYA = [], BJ = 'SD';
+let BIAYA = [], BJ = 'SD', GURU = [];
+function renderGuru() {
+  $('#guru-list').innerHTML = GURU.length ? GURU.map(g => { const ft = g.foto && g.foto_tampil !== 'TIDAK'; return `<article class="card rv tc">${ft ? `<img class="av" loading="lazy" src="${esc(g.foto)}" alt="">` : `<div class="av ini">${esc((g.nama || '?').trim().charAt(0))}</div>`}<h3>${esc(g.nama)}</h3><p class="muted">${esc(g.jabatan)}</p></article>`; }).join('') : '<p class="muted">Data guru dan karyawan akan segera ditambahkan.</p>';
+}
+function renderVideo() {
+  const m = String(P.VIDEO_URL || '').match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);
+  if (m) $('#vid').innerHTML = `<iframe src="https://www.youtube.com/embed/${m[1]}" title="Video dokumentasi" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;border-radius:1rem"></iframe>`;
+}
 const rp = n => 'Rp ' + Number(n || 0).toLocaleString('id-ID');
 function renderBiaya() {
   const box = $('#biaya-box'), l = BIAYA.filter(b => (b.jenjang === BJ || b.jenjang === 'Semua') && b.tampil !== 'TIDAK');
@@ -29,9 +36,9 @@ function renderBiaya() {
 }
 $$('#bj button').forEach(b => b.onclick = () => { BJ = b.dataset.j; $$('#bj button').forEach(x => x.classList.toggle('on', x === b)); renderBiaya(); });
 async function load() {
-  try { const r = await (await fetch(GAS_URL + '?action=getData')).json(); if (!r.success) throw 0; Object.assign(P, r.data.pengaturan); applyP(); renderBerita(r.data.berita || []); renderGaleri(r.data.galeri || []); BIAYA = r.data.biaya || []; }
+  try { const r = await (await fetch(GAS_URL + '?action=getData')).json(); if (!r.success) throw 0; Object.assign(P, r.data.pengaturan); applyP(); renderBerita(r.data.berita || []); renderGaleri(r.data.galeri || []); BIAYA = r.data.biaya || []; GURU = r.data.guru || []; }
   catch (e) { applyP(); renderBerita([]); renderGaleri([]); }
-  renderBiaya(); reveal();
+  renderBiaya(); renderGuru(); renderVideo(); reveal();
 }
 $('#form').addEventListener('submit', async e => {
   e.preventDefault(); const b = e.submitter; b.disabled = true; b.textContent = 'Mengirim...';
@@ -41,7 +48,8 @@ $('#form').addEventListener('submit', async e => {
   } catch (err) { notif('Gagal terhubung. Coba lagi atau hubungi admin via WhatsApp.', 'error'); }
   b.disabled = false; b.textContent = 'Kirim Pendaftaran';
 });
-$$('#menu a').forEach(a => a.addEventListener('click', () => document.body.classList.remove('open')));
+$$('.dd > a').forEach(a => a.addEventListener('click', e => { if (innerWidth <= 900) { e.preventDefault(); a.parentNode.classList.toggle('open'); } }));
+$$('#menu a:not(.dd > a)').forEach(a => a.addEventListener('click', () => { document.body.classList.remove('open'); $$('.dd').forEach(d => d.classList.remove('open')); }));
 if (matchMedia('(hover:hover)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches) {
   const g = $('#glow'); let x = 0, y = 0, tx = 0, ty = 0;
   addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; g.style.opacity = 1; });

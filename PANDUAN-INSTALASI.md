@@ -53,3 +53,6 @@ Tab baru di admin.html. **Galeri** dan **Biaya** bisa ditambah/diubah/dihapus; *
 
 ## I. Pembaruan: tampilan admin baru, ganti password, Portal Wali dihapus
 Salin ke repository: `index.html`, `admin.html`, `css/style.css`, `css/admin.css` (baru), `js/app.js`, `js/admin.js`, `js/icons.js` (baru). **Jangan timpa `js/config.js`.** Tempel `Kode.gs` baru, lalu Deploy → Manage deployments → Edit → New version. Ganti password lewat menu **Akun Saya**.
+
+## J. Menu Tentang Kami (dropdown) dan Guru & Karyawan
+Salin `index.html`, `css/style.css`, `js/app.js`, `js/admin.js`, `js/icons.js` (jangan timpa `config.js`), tempel `Kode.gs` baru, lalu Deploy versi baru. Setelah login admin, buka menu **Guru & Karyawan** (sheet dibuat otomatis) dan menu **Pengaturan** satu kali (baris baru KURIKULUM, PRESTASI, ALUMNI_INFO, MITRA, VIDEO_URL ditambahkan otomatis). Foto guru: isi link gambar, dan kolom `foto_tampil` = TIDAK untuk menyembunyikan foto.
