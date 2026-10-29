@@ -69,3 +69,6 @@ Semua foto dikelola lewat menu **Galeri**. Foto dipakai untuk: (1) latar beranda
 
 ## N. Unggah foto langsung dari panel admin
 Di form **Berita, Galeri, Guru & Karyawan, dan Pengumuman**, kolom foto punya tombol **Unggah**. Foto otomatis dikecilkan (maks 1600 px), disimpan di folder `Foto` pada Google Drive pondok, dan linknya terisi sendiri. Klik **Simpan** setelahnya. Bila muncul error izin: di Apps Script jalankan fungsi `izinkanDrive` sekali, lalu Deploy → New version.
+
+## O. Foto tanpa URL (pustaka Galeri)
+**Galeri** adalah pustaka foto: klik **Unggah foto**, isi judul, lalu Simpan. Di form **Berita, Guru & Karyawan, dan Pengumuman**, foto dipilih lewat tombol **Pilih dari Galeri** (jendela berisi semua foto Galeri), atau unggah foto baru langsung dari jendela itu (otomatis masuk Galeri). Tidak ada kolom link yang perlu diketik.
