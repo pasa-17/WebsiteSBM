@@ -66,3 +66,6 @@ Menu admin **Pengumuman Pop Up** (sheet dibuat otomatis). Kolom: judul, isi, gam
 
 ## M. Foto latar beranda dari Galeri
 Semua foto dikelola lewat menu **Galeri**. Foto dipakai untuk: (1) latar beranda yang berganti tiap 5 detik dengan lapisan gradasi biru, (2) kartu kampus di beranda, (3) kotak Fasilitas (isi `judul` foto dengan kata *masjid*, *asrama*, *kelas*, atau *lapangan* agar masuk ke kotak yang sesuai). Sembunyikan foto dengan `tampil` = TIDAK. Urutan mengikuti urutan baris; maksimal 8 foto pertama dipakai di latar.
+
+## N. Unggah foto langsung dari panel admin
+Di form **Berita, Galeri, Guru & Karyawan, dan Pengumuman**, kolom foto punya tombol **Unggah**. Foto otomatis dikecilkan (maks 1600 px), disimpan di folder `Foto` pada Google Drive pondok, dan linknya terisi sendiri. Klik **Simpan** setelahnya. Bila muncul error izin: di Apps Script jalankan fungsi `izinkanDrive` sekali, lalu Deploy → New version.

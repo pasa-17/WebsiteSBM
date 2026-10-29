@@ -14,3 +14,4 @@ body.ab{background:#EEF3FB;min-height:100vh}.bt{border:0;cursor:pointer;font:600
 .bd{display:inline-block;border-radius:9999px;padding:.15rem .7rem;font-size:12px;font-weight:700}.bd.Baru,.bd.TIDAK{background:#FFEDD5;color:#C2410C}.bd.Dihubungi{background:#DBEAFE;color:#1D4ED8}.bd.Observasi{background:#EDE9FE;color:#6D28D9}.bd.Diterima,.bd.YA{background:#D1FAE5;color:#047857}.bd.Ditolak{background:#FEE2E2;color:#B91C1C}
 .tl{display:flex;gap:.6rem;flex-wrap:wrap}.tl input,.tl select{width:auto;margin:0}.empty{text-align:center;color:#64748B;padding:1.5rem}
 @media(max-width:900px){#app{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center}#nav{flex-direction:row;flex-wrap:wrap;width:100%}.usr{flex-direction:row;align-items:center;margin:0}.stats2{grid-template-columns:1fr 1fr}.sbl{width:120px}}
+.up{display:flex;gap:.5rem;align-items:center}.up input{margin:0}.up .bt{white-space:nowrap}
