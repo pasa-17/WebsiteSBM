@@ -59,10 +59,23 @@ function renderTur() {
   }
   $('#tur-empty').hidden = ada;
 }
+let PENG = [], PI = 0;
+function drawPop() {
+  const g = PENG[PI], L = String(g.tombol_link || '').trim(), ok = /^(https?:\/\/|#|assets\/)/.test(L);
+  $('#pop-c').innerHTML = (g.gambar ? `<img src="${esc(g.gambar)}" alt="">` : '') + `<h3>${esc(g.judul)}</h3><p class="muted">${esc(g.isi).replace(/\n/g, '<br>')}</p>` + (ok ? `<a class="btn amber" href="${esc(L)}"${/^https?/.test(L) ? ' target="_blank" rel="noopener"' : ''}>${esc(g.tombol_teks || 'Selengkapnya')}</a>` : '');
+  const bt = $('#pop-c a'); if (bt) bt.onclick = closePop;
+  $('#pop-d').innerHTML = PENG.length > 1 ? PENG.map((_, i) => `<i class="${i === PI ? 'on' : ''}"></i>`).join('') : '';
+  $('#pop-p').hidden = $('#pop-n').hidden = PENG.length < 2;
+}
+function showPop() { if (P.POPUP_AKTIF === 'TIDAK' || !PENG.length || sessionStorage.getItem('popseen')) return; PI = 0; drawPop(); $('#pop').hidden = false; document.body.style.overflow = 'hidden'; }
+function closePop() { $('#pop').hidden = true; document.body.style.overflow = ''; sessionStorage.setItem('popseen', '1'); }
+$('#pop-x').onclick = closePop; $('#pop').onclick = e => { if (e.target.id === 'pop') closePop(); };
+$('#pop-p').onclick = () => { PI = (PI - 1 + PENG.length) % PENG.length; drawPop(); }; $('#pop-n').onclick = () => { PI = (PI + 1) % PENG.length; drawPop(); };
+addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#pop').hidden) closePop(); });
 async function load() {
-  try { const r = await (await fetch(GAS_URL + '?action=getData')).json(); if (!r.success) throw 0; Object.assign(P, r.data.pengaturan); applyP(); renderBerita(r.data.berita || []); renderGaleri(r.data.galeri || []); BIAYA = r.data.biaya || []; GURU = r.data.guru || []; }
+  try { const r = await (await fetch(GAS_URL + '?action=getData')).json(); if (!r.success) throw 0; Object.assign(P, r.data.pengaturan); applyP(); renderBerita(r.data.berita || []); renderGaleri(r.data.galeri || []); BIAYA = r.data.biaya || []; GURU = r.data.guru || []; PENG = r.data.pengumuman || []; }
   catch (e) { applyP(); renderBerita([]); renderGaleri([]); }
-  renderBiaya(); renderGuru(); renderVideo(); renderTur(); reveal();
+  renderBiaya(); renderGuru(); renderVideo(); renderTur(); reveal(); setTimeout(showPop, 600);
 }
 $('#form').addEventListener('submit', async e => {
   e.preventDefault(); const b = e.submitter; b.disabled = true; b.textContent = 'Mengirim...';

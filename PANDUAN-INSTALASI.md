@@ -60,3 +60,6 @@ Salin `index.html`, `css/style.css`, `js/app.js`, `js/admin.js`, `js/icons.js` (
 ## K. Virtual Tour 360°
 **Opsi 1: Street View Google.** Buka Google Maps, cari lokasi pondok, masuk ke Street View (tarik ikon orang kuning ke jalan di depan pondok). Klik **Bagikan → Sematkan peta**, salin kode HTML-nya, tempel utuh ke menu Pengaturan baris `STREETVIEW_EMBED`.
 **Opsi 2: foto 360° sendiri.** Buat foto 360 (aplikasi Google Street View di HP atau kamera 360), simpan sebagai `assets/panorama.jpg` di repository, lalu isi `PANORAMA_URL` dengan `assets/panorama.jpg`. Keduanya boleh dipakai bersamaan.
+
+## L. Pengumuman Pop Up
+Menu admin **Pengumuman Pop Up** (sheet dibuat otomatis). Kolom: judul, isi, gambar (link), tombol_teks, tombol_link, **popup** (YA = ikut tampil, TIDAK = disembunyikan). Saklar besar di atas halaman mengaktifkan/menonaktifkan semua pop up (`POPUP_AKTIF`, khusus admin). Pop up muncul sekali per kunjungan; bila ada beberapa, pengunjung bisa menggeser antar pengumuman.

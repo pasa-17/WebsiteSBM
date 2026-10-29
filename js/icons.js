@@ -20,5 +20,6 @@ save:'<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/
 plus:'<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
 chev:'<polyline points="6 9 12 15 18 9"/>',
 x:'<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+bell:'<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
 search:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>'};
 document.body.insertAdjacentHTML('afterbegin','<svg xmlns="http://www.w3.org/2000/svg" style="display:none">'+Object.keys(I).map(k=>`<symbol id="i-${k}" viewBox="0 0 24 24">${I[k]}</symbol>`).join('')+'</svg>');})();
