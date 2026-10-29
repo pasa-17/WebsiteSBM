@@ -1,7 +1,10 @@
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let TOKEN=sessionStorage.getItem('tk')||'',ROLE=sessionStorage.getItem('role')||'';
 function notif(m,t='success'){const n=$('#notif');n.textContent=m;n.className='notif '+t+' show';setTimeout(()=>n.classList.remove('show'),3000)}
-async function api(op,data={}){try{return await(await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'admin',op,token:TOKEN,data})})).json()}catch(e){return{success:false,message:'Gagal terhubung.'}}}
+async function api(op,data={}){
+if(!GAS_URL||/XXXX/.test(GAS_URL))return{success:false,message:'GAS_URL di js/config.js belum diisi dengan URL /exec.'};
+let res;try{res=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'admin',op,token:TOKEN,data})})}catch(e){return{success:false,message:'Tidak bisa menghubungi backend. Cek GAS_URL (harus berakhiran /exec) dan koneksi internet.'}}
+try{return await res.json()}catch(e){return{success:false,message:"Backend tidak mengembalikan data. Pastikan Web app diatur 'Who has access: Anyone' lalu deploy versi baru."}}}
 function show(){const on=!!TOKEN;$('#login').hidden=on;$('#panel').hidden=!on;if(on){$('#who').textContent=ROLE;if(ROLE!=='admin'){['pendaftar','biaya','pengaturan'].forEach(t=>document.querySelector(`.tabs [data-t=${t}]`).hidden=true);$('#t-pendaftar').hidden=true;$('#t-berita').hidden=false;document.querySelector('.tabs [data-t=berita]').classList.add('on');document.querySelector('.tabs [data-t=pendaftar]').classList.remove('on')}loadP();loadB()}}
 $('#fl').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),r=await api('login',{u:f.get('u'),p:f.get('p')});if(r.success){TOKEN=r.token;ROLE=r.role;sessionStorage.setItem('tk',TOKEN);sessionStorage.setItem('role',ROLE);show()}else notif(/tidak dikenal/i.test(r.message||'')?'Backend belum versi terbaru: Deploy → Manage deployments → Edit → New version.':(r.message||'Login gagal'),'error')};
 $('#eye').onclick=()=>{const p=$('#pw'),s=p.type==='password';p.type=s?'text':'password';$('#eye').textContent=s?'🙈':'👁'};
