@@ -12,6 +12,20 @@ function renderBerita(l) {
   $('#berita-list').innerHTML = l.length ? l.slice(0, 6).map(b => `<article class="card news rv">${b.gambar ? `<img loading="lazy" src="${esc(b.gambar)}" alt="">` : '<div class="ph"></div>'}<small>${esc(b.kategori || 'Berita')} · ${esc(String(b.tanggal || '').slice(0, 10))}</small><h3>${esc(b.judul)}</h3><p class="muted">${esc(b.ringkasan)}</p></article>`).join('') : '<p class="muted">Belum ada berita.</p>';
 }
 let GL = [], LI = 0, gt;
+function fade(el, urls, off) {
+  if (!el || !urls.length) return;
+  const els = urls.map(u => { const i = document.createElement('i'); i.className = 'sl'; i.style.backgroundImage = 'url("' + encodeURI(u).replace(/"/g, '%22') + '")'; el.appendChild(i); return i; });
+  let k = off % els.length; els[k].classList.add('on');
+  if (els.length > 1 && !matchMedia('(prefers-reduced-motion:reduce)').matches) setInterval(() => { els[k].classList.remove('on'); k = (k + 1) % els.length; els[k].classList.add('on'); }, 5000);
+}
+function photoSlots() {
+  if (!GL.length) return;
+  const urls = GL.slice(0, 8).map(g => g.url);
+  fade($('#hbg'), urls, 0);
+  if (!P.FOTO_KAMPUS) fade($('#cl'), urls, 1);
+  const keys = [['masjid'], ['asrama'], ['kelas'], ['lapangan', 'area', 'hijau']];
+  $$('.fas .tile').forEach((t, i) => { const g = GL.find(x => keys[i].some(k => String(x.judul || '').toLowerCase().includes(k))) || GL[i % GL.length]; t.style.backgroundImage = 'linear-gradient(180deg,transparent 40%,rgba(8,22,48,.8)),url("' + encodeURI(g.url).replace(/"/g, '%22') + '")'; });
+}
 function renderGaleri(l) {
   GL = l.filter(g => g.url); const s = $('#galeri-list');
   s.innerHTML = GL.length ? GL.map((g, i) => `<img loading="lazy" data-i="${i}" src="${esc(g.url)}" alt="${esc(g.judul)}">`).join('') : '<div class="ph"></div><div class="ph"></div><div class="ph"></div>';
@@ -20,6 +34,7 @@ function renderGaleri(l) {
   const auto = () => { clearInterval(gt); if (GL.length > 1) gt = setInterval(() => move(1), 3500); };
   auto(); ['mouseenter', 'touchstart'].forEach(v => s.addEventListener(v, () => clearInterval(gt), {passive: true})); ['mouseleave', 'touchend'].forEach(v => s.addEventListener(v, auto, {passive: true}));
   s.onclick = e => { const im = e.target.closest('img'); if (im) openLb(+im.dataset.i); };
+  photoSlots();
 }
 function openLb(i) { if (!GL.length) return; LI = (i + GL.length) % GL.length; $('#lbi').src = GL[LI].url; $('#lbc').textContent = GL[LI].judul || ''; $('#lb').hidden = false; document.body.style.overflow = 'hidden'; }
 function closeLb() { $('#lb').hidden = true; document.body.style.overflow = ''; }

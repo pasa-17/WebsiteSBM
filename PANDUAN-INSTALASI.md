@@ -63,3 +63,6 @@ Salin `index.html`, `css/style.css`, `js/app.js`, `js/admin.js`, `js/icons.js` (
 
 ## L. Pengumuman Pop Up
 Menu admin **Pengumuman Pop Up** (sheet dibuat otomatis). Kolom: judul, isi, gambar (link), tombol_teks, tombol_link, **popup** (YA = ikut tampil, TIDAK = disembunyikan). Saklar besar di atas halaman mengaktifkan/menonaktifkan semua pop up (`POPUP_AKTIF`, khusus admin). Pop up muncul sekali per kunjungan; bila ada beberapa, pengunjung bisa menggeser antar pengumuman.
+
+## M. Foto latar beranda dari Galeri
+Semua foto dikelola lewat menu **Galeri**. Foto dipakai untuk: (1) latar beranda yang berganti tiap 5 detik dengan lapisan gradasi biru, (2) kartu kampus di beranda, (3) kotak Fasilitas (isi `judul` foto dengan kata *masjid*, *asrama*, *kelas*, atau *lapangan* agar masuk ke kotak yang sesuai). Sembunyikan foto dengan `tampil` = TIDAK. Urutan mengikuti urutan baris; maksimal 8 foto pertama dipakai di latar.
