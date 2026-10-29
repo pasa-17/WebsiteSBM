@@ -82,15 +82,15 @@ function drawPop() {
   $('#pop-d').innerHTML = PENG.length > 1 ? PENG.map((_, i) => `<i class="${i === PI ? 'on' : ''}"></i>`).join('') : '';
   $('#pop-p').hidden = $('#pop-n').hidden = PENG.length < 2;
 }
-function showPop() { if (P.POPUP_AKTIF === 'TIDAK' || !PENG.length || sessionStorage.getItem('popseen')) return; PI = 0; drawPop(); $('#pop').hidden = false; document.body.style.overflow = 'hidden'; }
+function showPop() { if (document.body.classList.contains('mt') || P.POPUP_AKTIF === 'TIDAK' || !PENG.length || sessionStorage.getItem('popseen')) return; PI = 0; drawPop(); $('#pop').hidden = false; document.body.style.overflow = 'hidden'; }
 function closePop() { $('#pop').hidden = true; document.body.style.overflow = ''; sessionStorage.setItem('popseen', '1'); }
 $('#pop-x').onclick = closePop; $('#pop').onclick = e => { if (e.target.id === 'pop') closePop(); };
 $('#pop-p').onclick = () => { PI = (PI - 1 + PENG.length) % PENG.length; drawPop(); }; $('#pop-n').onclick = () => { PI = (PI + 1) % PENG.length; drawPop(); };
 addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#pop').hidden) closePop(); });
 async function load() {
-  try { const r = await (await fetch(GAS_URL + '?action=getData')).json(); if (!r.success) throw 0; Object.assign(P, r.data.pengaturan); applyP(); renderBerita(r.data.berita || []); renderGaleri(r.data.galeri || []); BIAYA = r.data.biaya || []; GURU = r.data.guru || []; PENG = r.data.pengumuman || []; }
+  try { const r = await (await fetch(GAS_URL + '?action=getData')).json(); if (!r.success) throw 0; Object.assign(P, r.data.pengaturan); if (P.MODE_PEMELIHARAAN === 'YA') { document.body.classList.add('mt'); $('#mt').hidden = false; if (P.PESAN_PEMELIHARAAN) $('#mt-p').textContent = P.PESAN_PEMELIHARAAN; } applyP(); renderBerita(r.data.berita || []); renderGaleri(r.data.galeri || []); BIAYA = r.data.biaya || []; GURU = r.data.guru || []; PENG = r.data.pengumuman || []; }
   catch (e) { applyP(); renderBerita([]); renderGaleri([]); }
-  renderBiaya(); renderGuru(); renderVideo(); renderTur(); reveal(); setTimeout(showPop, 600);
+  renderBiaya(); renderGuru(); renderVideo(); renderTur(); reveal(); document.documentElement.classList.remove('wait'); setTimeout(showPop, 600);
 }
 $('#form').addEventListener('submit', async e => {
   e.preventDefault(); const b = e.submitter; b.disabled = true; b.textContent = 'Mengirim...';

@@ -72,3 +72,6 @@ Di form **Berita, Galeri, Guru & Karyawan, dan Pengumuman**, kolom foto punya to
 
 ## O. Foto tanpa URL (pustaka Galeri)
 **Galeri** adalah pustaka foto: klik **Unggah foto**, isi judul, lalu Simpan. Di form **Berita, Guru & Karyawan, dan Pengumuman**, foto dipilih lewat tombol **Pilih dari Galeri** (jendela berisi semua foto Galeri), atau unggah foto baru langsung dari jendela itu (otomatis masuk Galeri). Tidak ada kolom link yang perlu diketik.
+
+## P. Mematikan website sementara
+Di panel admin (menu **Ringkasan**, khusus admin) ada tombol **Matikan Website**. Pengunjung hanya melihat halaman "Website Segera Hadir"; panel admin tetap bisa dipakai. Tombol yang sama menjadi **Hidupkan Website**. Teks halamannya bisa diubah di Pengaturan (`PESAN_PEMELIHARAAN`). Ini berlaku untuk semua alamat yang memakai kode yang sama (GitHub Pages dan Vercel).
