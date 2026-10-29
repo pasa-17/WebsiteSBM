@@ -44,3 +44,4 @@
 .tc{text-align:center}.av{width:96px;height:96px;border-radius:50%;object-fit:cover;margin:0 auto .6rem;display:block}.ini{display:grid;place-items:center;font-size:36px;font-weight:800;color:#fff;background:linear-gradient(135deg,#0F2B5C,#38BDF8)}
 @media(max-width:900px){.dd-m{position:static;box-shadow:none;background:rgba(255,255,255,.06);margin:.3rem 0}.dd-m a{color:#dbeafe!important}.dd:hover .dd-m{display:none}.dd.open .dd-m{display:flex}}
 .glasscard b{color:#fff}.glasscard small{color:#93c5fd}
+[hidden]{display:none!important}

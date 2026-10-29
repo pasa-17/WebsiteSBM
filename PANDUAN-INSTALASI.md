@@ -56,3 +56,7 @@ Salin ke repository: `index.html`, `admin.html`, `css/style.css`, `css/admin.css
 
 ## J. Menu Tentang Kami (dropdown) dan Guru & Karyawan
 Salin `index.html`, `css/style.css`, `js/app.js`, `js/admin.js`, `js/icons.js` (jangan timpa `config.js`), tempel `Kode.gs` baru, lalu Deploy versi baru. Setelah login admin, buka menu **Guru & Karyawan** (sheet dibuat otomatis) dan menu **Pengaturan** satu kali (baris baru KURIKULUM, PRESTASI, ALUMNI_INFO, MITRA, VIDEO_URL ditambahkan otomatis). Foto guru: isi link gambar, dan kolom `foto_tampil` = TIDAK untuk menyembunyikan foto.
+
+## K. Virtual Tour 360°
+**Opsi 1: Street View Google.** Buka Google Maps, cari lokasi pondok, masuk ke Street View (tarik ikon orang kuning ke jalan di depan pondok). Klik **Bagikan → Sematkan peta**, salin kode HTML-nya, tempel utuh ke menu Pengaturan baris `STREETVIEW_EMBED`.
+**Opsi 2: foto 360° sendiri.** Buat foto 360 (aplikasi Google Street View di HP atau kamera 360), simpan sebagai `assets/panorama.jpg` di repository, lalu isi `PANORAMA_URL` dengan `assets/panorama.jpg`. Keduanya boleh dipakai bersamaan.

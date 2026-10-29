@@ -35,10 +35,23 @@ function renderBiaya() {
   box.innerHTML = '<table><tr><th>Komponen</th><th>Periode</th><th>Nominal</th></tr>' + l.map(b => `<tr><td>${esc(b.komponen)}</td><td>${esc(b.periode)}</td><td>${rp(b.nominal)}</td></tr>`).join('') + `<tr class="tot"><td colspan="2">Estimasi masuk (sekali bayar${bln ? ' + 1 bulan pertama' : ''})</td><td>${rp(sekali + (bln ? Number(bln.nominal) : 0))}</td></tr></table>`;
 }
 $$('#bj button').forEach(b => b.onclick = () => { BJ = b.dataset.j; $$('#bj button').forEach(x => x.classList.toggle('on', x === b)); renderBiaya(); });
+function renderTur() {
+  $('#svlink').href = 'https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=' + (P.KOORDINAT || '-8.0291696,112.4345699');
+  let ada = false, e = String(P.STREETVIEW_EMBED || ''), m = e.match(/src="([^"]+)"/), u = m ? m[1] : e.trim();
+  if (/^https:\/\/www\.google\.com\/maps\/embed/.test(u)) { $('#sv').innerHTML = `<iframe src="${esc(u)}" title="Street View lokasi pondok" loading="lazy" allowfullscreen style="width:100%;height:440px;border:0;border-radius:1rem"></iframe>`; ada = true; }
+  const p = String(P.PANORAMA_URL || '').trim();
+  if (/^(https?:\/\/|assets\/)/.test(p)) {
+    ada = true; $('#pano').hidden = false;
+    const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css'; document.head.appendChild(l);
+    const s = document.createElement('script'); s.src = 'https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js';
+    s.onload = () => pannellum.viewer('pano', {type: 'equirectangular', panorama: p, autoLoad: true, autoRotate: -2, showControls: true}); document.head.appendChild(s);
+  }
+  $('#tur-empty').hidden = ada;
+}
 async function load() {
   try { const r = await (await fetch(GAS_URL + '?action=getData')).json(); if (!r.success) throw 0; Object.assign(P, r.data.pengaturan); applyP(); renderBerita(r.data.berita || []); renderGaleri(r.data.galeri || []); BIAYA = r.data.biaya || []; GURU = r.data.guru || []; }
   catch (e) { applyP(); renderBerita([]); renderGaleri([]); }
-  renderBiaya(); renderGuru(); renderVideo(); reveal();
+  renderBiaya(); renderGuru(); renderVideo(); renderTur(); reveal();
 }
 $('#form').addEventListener('submit', async e => {
   e.preventDefault(); const b = e.submitter; b.disabled = true; b.textContent = 'Mengirim...';
