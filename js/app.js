@@ -5,7 +5,7 @@ function notif(m, t = 'success') { const n = $('#notif'); n.textContent = m; n.c
 function applyP() {
   $$('[data-p]').forEach(e => { if (P[e.dataset.p]) e.textContent = P[e.dataset.p]; });
   $$('[data-wa]').forEach(a => a.href = 'https://wa.me/' + String(P.WA_ADMIN).replace(/\D/g, '') + '?text=' + encodeURIComponent(a.dataset.wa));
-  $('#portal').href = $('#portal2').href = P.PORTAL_URL || '#'; if (P.FOTO_KAMPUS) $('#campus').style.backgroundImage = `url(${P.FOTO_KAMPUS})`; $('#peta').src = P.MAPS_EMBED;
+  if (P.FOTO_KAMPUS) $('#campus').style.backgroundImage = `url(${P.FOTO_KAMPUS})`; $('#peta').src = P.MAPS_EMBED;
   $('#soc').innerHTML = [['Instagram','INSTAGRAM'],['YouTube','YOUTUBE'],['Facebook','FACEBOOK'],['TikTok','TIKTOK']].filter(x => P[x[1]]).map(x => `<a href="${esc(P[x[1]])}" target="_blank" rel="noopener">${x[0]}</a>`).join('');
 }
 function renderBerita(l) {

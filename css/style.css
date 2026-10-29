@@ -38,3 +38,4 @@
 #biaya-box table{width:100%;border-collapse:collapse}#biaya-box td,#biaya-box th{padding:.6rem;border-bottom:1px solid #e2e8f0;text-align:left}#biaya-box .tot{background:#FFEDD5;font-weight:800}
 @media(max-width:900px){.statbar{grid-template-columns:1fr 1fr}.fas{grid-template-columns:1fr;grid-template-rows:none}.tile{min-height:140px}.fgrid{grid-template-columns:1fr}}
 .pw{position:relative;display:block}.pw input{padding-right:3rem}#eye{position:absolute;right:.5rem;top:50%;transform:translateY(-35%);background:none;border:0;font-size:20px;cursor:pointer}
+.ic{width:1.2em;height:1.2em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.2em}.ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#0F2B5C,#1E3A8A);color:#fff;margin-bottom:.6rem}.ico .ic{width:24px;height:24px}

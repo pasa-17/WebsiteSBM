@@ -50,3 +50,6 @@ Tab baru di admin.html. **Galeri** dan **Biaya** bisa ditambah/diubah/dihapus; *
 1. Pastikan Kode.gs terbaru sudah di-deploy (**Manage deployments → Edit → New version**).
 2. Di editor Apps Script, ubah sandi di fungsi `aturAkunAdmin`, pilih fungsi itu, klik **Run**. Ini otomatis membuat sheet `Admin` bila belum ada, dan mereset sandi bila username `admin` sudah ada. Setelah berhasil, kembalikan sandinya ke tulisan semula.
 3. Login dengan username `admin` dan sandi tadi. Ikon mata di kolom password menampilkan atau menyembunyikan sandi.
+
+## I. Pembaruan: tampilan admin baru, ganti password, Portal Wali dihapus
+Salin ke repository: `index.html`, `admin.html`, `css/style.css`, `css/admin.css` (baru), `js/app.js`, `js/admin.js`, `js/icons.js` (baru). **Jangan timpa `js/config.js`.** Tempel `Kode.gs` baru, lalu Deploy → Manage deployments → Edit → New version. Ganti password lewat menu **Akun Saya**.
