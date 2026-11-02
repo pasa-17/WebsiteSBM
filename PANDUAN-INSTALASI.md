@@ -78,3 +78,6 @@ Di panel admin (menu **Ringkasan**, khusus admin) ada tombol **Matikan Website**
 
 ## Q. Panel admin lebih cepat
 Setelah login, semua data (pendaftar, berita, galeri, guru, pengumuman, biaya, pengaturan) dimuat di latar belakang. Berpindah menu langsung tampil dari cache, lalu diperbarui diam-diam. Hanya salin `js/admin.js` dan `css/admin.css`.
+
+## R. Foto terpisah per lokasi & Pengaturan terkelompok
+Menu **Foto Halaman**: pilih lokasi (Beranda/latar, Kartu Kampus, Masjid, Asrama, Ruang Kelas, Lapangan, Pimpinan), unggah foto, Simpan. Foto-foto ini terpisah dari **Galeri**. Menu **Pengaturan** kini berupa tab: Kontak, Media Sosial (tiap platform punya tombol Simpan sendiri), Beranda, Teks Halaman, Video & Tur 360°, Status Website. Tempel Kode.gs baru lalu Deploy versi baru.

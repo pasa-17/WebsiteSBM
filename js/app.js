@@ -18,13 +18,13 @@ function fade(el, urls, off) {
   let k = off % els.length; els[k].classList.add('on');
   if (els.length > 1 && !matchMedia('(prefers-reduced-motion:reduce)').matches) setInterval(() => { els[k].classList.remove('on'); k = (k + 1) % els.length; els[k].classList.add('on'); }, 5000);
 }
+let FOTO = [];
 function photoSlots() {
-  if (!GL.length) return;
-  const urls = GL.slice(0, 8).map(g => g.url);
-  fade($('#hbg'), urls, 0);
-  if (!P.FOTO_KAMPUS) fade($('#cl'), urls, 1);
-  const keys = [['masjid'], ['asrama'], ['kelas'], ['lapangan', 'area', 'hijau']];
-  $$('.fas .tile').forEach((t, i) => { const g = GL.find(x => keys[i].some(k => String(x.judul || '').toLowerCase().includes(k))) || GL[i % GL.length]; t.style.backgroundImage = 'linear-gradient(180deg,transparent 40%,rgba(8,22,48,.8)),url("' + encodeURI(g.url).replace(/"/g, '%22') + '")'; });
+  const by = k => FOTO.filter(f => f.lokasi === k && f.url).map(f => f.url);
+  fade($('#hbg'), by('beranda').slice(0, 8), 0);
+  if (!P.FOTO_KAMPUS) fade($('#cl'), by('kampus').slice(0, 8), 0);
+  ['masjid', 'asrama', 'kelas', 'lapangan'].forEach((k, n) => { const t = $$('.fas .tile')[n], u = by(k)[0]; if (t && u) t.style.backgroundImage = 'linear-gradient(180deg,transparent 40%,rgba(8,22,48,.8)),url("' + encodeURI(u).replace(/"/g, '%22') + '")'; });
+  const pm = by('pimpinan')[0]; if (pm) $('.portrait').style.backgroundImage = 'url("' + encodeURI(pm).replace(/"/g, '%22') + '")';
 }
 function renderGaleri(l) {
   GL = l.filter(g => g.url); const s = $('#galeri-list');
@@ -34,7 +34,6 @@ function renderGaleri(l) {
   const auto = () => { clearInterval(gt); if (GL.length > 1) gt = setInterval(() => move(1), 3500); };
   auto(); ['mouseenter', 'touchstart'].forEach(v => s.addEventListener(v, () => clearInterval(gt), {passive: true})); ['mouseleave', 'touchend'].forEach(v => s.addEventListener(v, auto, {passive: true}));
   s.onclick = e => { const im = e.target.closest('img'); if (im) openLb(+im.dataset.i); };
-  photoSlots();
 }
 function openLb(i) { if (!GL.length) return; LI = (i + GL.length) % GL.length; $('#lbi').src = GL[LI].url; $('#lbc').textContent = GL[LI].judul || ''; $('#lb').hidden = false; document.body.style.overflow = 'hidden'; }
 function closeLb() { $('#lb').hidden = true; document.body.style.overflow = ''; }
@@ -88,9 +87,9 @@ $('#pop-x').onclick = closePop; $('#pop').onclick = e => { if (e.target.id === '
 $('#pop-p').onclick = () => { PI = (PI - 1 + PENG.length) % PENG.length; drawPop(); }; $('#pop-n').onclick = () => { PI = (PI + 1) % PENG.length; drawPop(); };
 addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#pop').hidden) closePop(); });
 async function load() {
-  try { const r = await (await fetch(GAS_URL + '?action=getData')).json(); if (!r.success) throw 0; Object.assign(P, r.data.pengaturan); if (P.MODE_PEMELIHARAAN === 'YA') { document.body.classList.add('mt'); $('#mt').hidden = false; if (P.PESAN_PEMELIHARAAN) $('#mt-p').textContent = P.PESAN_PEMELIHARAAN; } applyP(); renderBerita(r.data.berita || []); renderGaleri(r.data.galeri || []); BIAYA = r.data.biaya || []; GURU = r.data.guru || []; PENG = r.data.pengumuman || []; }
+  try { const r = await (await fetch(GAS_URL + '?action=getData')).json(); if (!r.success) throw 0; Object.assign(P, r.data.pengaturan); if (P.MODE_PEMELIHARAAN === 'YA') { document.body.classList.add('mt'); $('#mt').hidden = false; if (P.PESAN_PEMELIHARAAN) $('#mt-p').textContent = P.PESAN_PEMELIHARAAN; } applyP(); renderBerita(r.data.berita || []); renderGaleri(r.data.galeri || []); BIAYA = r.data.biaya || []; GURU = r.data.guru || []; PENG = r.data.pengumuman || []; FOTO = r.data.foto || []; }
   catch (e) { applyP(); renderBerita([]); renderGaleri([]); }
-  renderBiaya(); renderGuru(); renderVideo(); renderTur(); reveal(); document.documentElement.classList.remove('wait'); setTimeout(showPop, 600);
+  renderBiaya(); renderGuru(); renderVideo(); renderTur(); photoSlots(); reveal(); document.documentElement.classList.remove('wait'); setTimeout(showPop, 600);
 }
 $('#form').addEventListener('submit', async e => {
   e.preventDefault(); const b = e.submitter; b.disabled = true; b.textContent = 'Mengirim...';
