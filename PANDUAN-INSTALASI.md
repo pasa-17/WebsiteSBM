@@ -75,3 +75,6 @@ Di form **Berita, Galeri, Guru & Karyawan, dan Pengumuman**, kolom foto punya to
 
 ## P. Mematikan website sementara
 Di panel admin (menu **Ringkasan**, khusus admin) ada tombol **Matikan Website**. Pengunjung hanya melihat halaman "Website Segera Hadir"; panel admin tetap bisa dipakai. Tombol yang sama menjadi **Hidupkan Website**. Teks halamannya bisa diubah di Pengaturan (`PESAN_PEMELIHARAAN`). Ini berlaku untuk semua alamat yang memakai kode yang sama (GitHub Pages dan Vercel).
+
+## Q. Panel admin lebih cepat
+Setelah login, semua data (pendaftar, berita, galeri, guru, pengumuman, biaya, pengaturan) dimuat di latar belakang. Berpindah menu langsung tampil dari cache, lalu diperbarui diam-diam. Hanya salin `js/admin.js` dan `css/admin.css`.

@@ -2,18 +2,28 @@ const $=(s,r=document)=>r.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']
 const ic=n=>`<svg class="ic"><use href="#i-${n}"/></svg>`;
 let TOKEN=sessionStorage.getItem('tk')||'',ROLE=sessionStorage.getItem('role')||'',USER=sessionStorage.getItem('user')||'',CUR='dash',G={};
 function toast(m,t='success'){const n=$('#notif');n.textContent=m;n.className='notif '+t+' show';setTimeout(()=>n.classList.remove('show'),3200)}
-async function api(op,data={}){
+async function raw(op,data={}){
 if(!GAS_URL||/XXXX/.test(GAS_URL))return{success:false,message:'GAS_URL di js/config.js belum diisi dengan URL /exec.'};
 let res;try{res=await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'admin',op,token:TOKEN,data})})}catch(e){return{success:false,message:'Tidak bisa menghubungi backend. Cek GAS_URL dan koneksi internet.'}}
 let r;try{r=await res.json()}catch(e){return{success:false,message:"Backend tidak mengembalikan data. Pastikan Web app diatur 'Who has access: Anyone'."}}
 if(!r.success&&/sesi berakhir/i.test(r.message||'')){sessionStorage.clear();TOKEN='';show();toast(r.message,'error')}return r}
+/* ===== Cache cerdas: data tampil INSTAN dari cache, lalu diperbarui diam-diam di latar ===== */
+const CA=(()=>{try{return JSON.parse(sessionStorage.getItem('ca')||'{}')}catch(e){return{}}})(),INF={};
+const saveCA=()=>{try{sessionStorage.setItem('ca',JSON.stringify(CA))}catch(e){}};
+function bgRender(){const a=document.activeElement;if(!TOKEN||(a&&M.contains(a)&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)))return;go(CUR)}
+function api(op,data={}){
+if(!/\.list$/.test(op))return raw(op,data);
+const c=CA[op];
+const p=INF[op]||(INF[op]=raw(op,data).then(r=>{delete INF[op];if(r.success){const ch=JSON.stringify(r)!==JSON.stringify(c);CA[op]=r;saveCA();if(c&&ch)bgRender()}return r}));
+return c?Promise.resolve(c):p}
+function prefetch(){(ROLE==='admin'?['pendaftar.list','biaya.list','pengaturan.list']:[]).concat(['berita.list','galeri.list','guru.list','pengumuman.list']).forEach(o=>api(o))}
 document.addEventListener('click',e=>{const b=e.target.closest('.eye');if(!b)return;const i=b.parentNode.querySelector('input'),s=i.type==='password';i.type=s?'text':'password';b.innerHTML=ic(s?'eye-off':'eye')});
 const MENU=[['dash','Ringkasan','home',0],['pendaftar','Pendaftar','users',1],['berita','Berita','file',0],['galeri','Galeri','image',0],['pengumuman','Pengumuman Pop Up','bell',0],['guru','Guru & Karyawan','award',0],['biaya','Biaya','dollar',1],['pengaturan','Pengaturan','sliders',1],['akun','Akun Saya','key',0]];
 const TITLE={berita:'Berita & Pengumuman',galeri:'Galeri Foto',pengumuman:'Pengumuman Pop Up',guru:'Guru & Karyawan',biaya:'Rincian Biaya',pengaturan:'Pengaturan Situs'};
-function show(){const on=!!TOKEN;$('#login').hidden=on;$('#app').hidden=!on;if(!on)return;
+function show(){const on=!!TOKEN;$('#login').hidden=on;$('#app').hidden=!on;if(!on){Object.keys(CA).forEach(k=>delete CA[k]);return}
 $('#who').textContent=USER+' · '+(ROLE==='admin'?'Administrator':'Editor');$('#out').innerHTML=ic('out')+' Keluar';
 $('#nav').innerHTML=MENU.filter(m=>!m[3]||ROLE==='admin').map(m=>`<button data-t="${m[0]}">${ic(m[2])}${m[1]}</button>`).join('');
-document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.t));go(CUR)}
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.t));go(CUR);prefetch()}
 function go(t){CUR=t;document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
 ({dash:vDash,pendaftar:vPend,akun:vAkun}[t]||(()=>vGen(t)))()}
 $('#fl').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),b=e.submitter;b.disabled=true;const r=await api('login',{u:f.get('u'),p:f.get('p')});b.disabled=false;
