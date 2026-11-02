@@ -58,3 +58,28 @@
 @media(prefers-reduced-motion:reduce){.hbg .sl.on{animation:none}}
 .tc{padding:1rem}.av{width:100%;height:auto;aspect-ratio:4/5;border-radius:1rem;object-fit:cover;object-position:center top;margin:0 0 .9rem}.ini{font-size:56px}.tc h3{margin:.2rem 0}
 .wait body{visibility:hidden}body.mt>*:not(#mt):not(script):not(svg){display:none!important}#mt{min-height:100vh;display:grid;place-items:center;text-align:center;padding:2rem;background:linear-gradient(180deg,#081630,#0F2B5C 60%,#1E3A8A);color:#cbd5e1}#mt[hidden]{display:none}
+/* ===== Tampilan HP: dikecilkan & dirapatkan ===== */
+@media(max-width:600px){
+body{font-size:14px}.wrap{padding:0 1rem}
+.topbar{font-size:10.5px;padding:.3rem .6rem;line-height:1.3}
+.nav-in{padding:.4rem 1rem}.logo img{height:32px;padding:2px 6px}
+h1{font-size:27px;line-height:1.25}h2{font-size:22px}h3{font-size:16px}
+.hero{padding:2rem 0 1.5rem}.hero p{font-size:14.5px}.hero-in{gap:1rem}.chip{font-size:10.5px}
+.btn{padding:.55rem 1rem;font-size:13.5px;border-radius:.8rem}.cta{gap:.5rem;margin-top:1rem}
+.glasscard{padding:.8rem;border-radius:1.1rem}.campus{height:150px;border-radius:1rem}.badge30{font-size:15px;padding:.3rem .65rem;right:-4px}.badge30 small{font-size:9px}
+.statbar{gap:.5rem;margin-top:1.2rem}.statbar>div{padding:.65rem;border-radius:.9rem}.statbar b{font-size:17px}.statbar span{font-size:10.5px}
+.sec{padding:2.2rem 0}.eyebrow{font-size:10px}
+.card{padding:.9rem;border-radius:1rem}.card p{font-size:13.5px}.ico{width:38px;height:38px;border-radius:11px}.ico .ic{width:19px;height:19px}
+.portrait{height:240px;border-radius:1.1rem}.two{gap:1.2rem}
+.fas{grid-template-columns:1fr 1fr;grid-template-rows:none}.tile.big{grid-column:span 2;grid-row:auto;min-height:140px}.tile{min-height:100px;font-size:12.5px;padding:.7rem}
+.grid2,.grid3{gap:.7rem}.grid4{grid-template-columns:1fr 1fr;gap:.7rem}.grid5{gap:.6rem}.grid5 b{font-size:20px}
+.tc{padding:.6rem}.tc h3{font-size:14px}.tc p{font-size:12.5px}.ini{font-size:38px}
+.slider img,.slider .ph{height:165px;flex-basis:78%;border-radius:1rem}.gnav{width:34px;height:34px}.gnav.l{left:-2px}.gnav.r{right:-2px}
+input,select,textarea{font-size:16px;padding:.6rem .8rem}.form h3{font-size:16px}
+.faq details{padding:.7rem .9rem}.fgrid{gap:1rem;font-size:13px}.foot{padding:1.5rem 0}
+.fab{width:44px;height:44px;right:.7rem;bottom:.7rem}.fab .ic{width:22px!important;height:22px!important}
+.popc{padding:1rem;border-radius:1.2rem}.popc h3{font-size:18px}.popc img{max-height:200px}
+.lb img{max-height:68vh}.lbb{width:38px;height:38px}
+.dd-m a{font-size:13px;padding:.5rem .8rem}nav{padding:.7rem}
+#biaya-box td,#biaya-box th{padding:.45rem;font-size:12.5px}
+}
