@@ -8,8 +8,14 @@ function applyP() {
   if (P.FOTO_KAMPUS) $('#campus').style.backgroundImage = `url(${P.FOTO_KAMPUS})`; $('#peta').src = P.MAPS_EMBED;
   $('#soc').innerHTML = [['Instagram','INSTAGRAM'],['YouTube','YOUTUBE'],['Facebook','FACEBOOK'],['TikTok','TIKTOK']].filter(x => P[x[1]]).map(x => `<a href="${esc(P[x[1]])}" target="_blank" rel="noopener">${x[0]}</a>`).join('');
 }
+let BER = [];
+function openNw(i) { const b = BER[i]; if (!b) return; $('#nw-c').innerHTML = (b.gambar ? `<img src="${esc(b.gambar)}" alt="">` : '') + `<small style="color:#EA580C;font-weight:700">${esc(b.kategori || 'Berita')} · ${esc(String(b.tanggal || '').slice(0, 10))}</small><h3>${esc(b.judul)}</h3><p class="muted">${esc(b.isi || b.ringkasan).replace(/\n/g, '<br>')}</p>`; $('#nw').hidden = false; document.body.style.overflow = 'hidden'; }
+function closeNw() { $('#nw').hidden = true; document.body.style.overflow = ''; }
+$('#nw-x').onclick = closeNw; $('#nw').onclick = e => { if (e.target.id === 'nw') closeNw(); };
+$('#berita-list').addEventListener('click', e => { const c = e.target.closest('[data-n]'); if (c) openNw(+c.dataset.n); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#nw').hidden) closeNw(); });
 function renderBerita(l) {
-  $('#berita-list').innerHTML = l.length ? l.slice(0, 6).map(b => `<article class="card news rv">${b.gambar ? `<img loading="lazy" src="${esc(b.gambar)}" alt="">` : '<div class="ph"></div>'}<small>${esc(b.kategori || 'Berita')} · ${esc(String(b.tanggal || '').slice(0, 10))}</small><h3>${esc(b.judul)}</h3><p class="muted">${esc(b.ringkasan)}</p></article>`).join('') : '<p class="muted">Belum ada berita.</p>';
+  $('#berita-list').innerHTML = l.length ? (BER = l.slice(0, 6)).map((b, i) => `<article class="card news rv" data-n="${i}" tabindex="0" style="cursor:pointer">${b.gambar ? `<img loading="lazy" src="${esc(b.gambar)}" alt="">` : '<div class="ph"></div>'}<small>${esc(b.kategori || 'Berita')} · ${esc(String(b.tanggal || '').slice(0, 10))}</small><h3>${esc(b.judul)}</h3><p class="muted">${esc(b.ringkasan)}</p><span class="link">Baca selengkapnya →</span></article>`).join('') : '<p class="muted">Belum ada berita.</p>';
 }
 let GL = [], LI = 0, gt;
 function fade(el, urls, off) {
